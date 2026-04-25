@@ -2,6 +2,7 @@
 
 namespace MarbleCms\Translate\Http\Controllers\Admin;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Marble\Admin\Facades\Marble;
@@ -14,6 +15,7 @@ use MarbleCms\Translate\Services\TranslationService;
 
 class TranslateController extends Controller
 {
+    use AuthorizesRequests;
     public function index()
     {
         $languages   = Language::orderBy('id')->get();
@@ -115,7 +117,8 @@ class TranslateController extends Controller
 
     public function apply(TranslationJob $job)
     {
-        $item      = $job->item;
+        $item = $job->item;
+        $this->authorize('update', $item);
         $langId    = $job->target_language_id;
         $fields    = $job->translated_fields ?? [];
 
@@ -149,6 +152,7 @@ class TranslateController extends Controller
 
     public function reject(TranslationJob $job)
     {
+        $this->authorize('update', $job->item);
         $job->update(['status' => 'rejected']);
 
         return redirect()->route('marble.translate.show', $job->item)

@@ -1,0 +1,24 @@
+{
+    "name": "marblecms/marble-translate",
+    "description": "AI translation plugin for Marble CMS: DeepL and Google Translate support for Item field values.",
+    "type": "marble-plugin",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "marble/admin": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "MarbleCms\\Translate\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": ["MarbleCms\\Translate\\TranslateServiceProvider"]
+        },
+        "marble-plugin": {
+            "name": "Marble Translate",
+            "description": "Translate Marble CMS item field values using DeepL or Google Translate."
+        }
+    }
+}
